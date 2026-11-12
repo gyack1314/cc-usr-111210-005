@@ -1,0 +1,263 @@
+{
+  "source_id": "catalog-demo",
+  "query": {
+    "term": {
+      "status": "sale"
+    }
+  },
+  "slices": 2,
+  "sort": [
+    "updated",
+    "tie_breaker"
+  ],
+  "global_total": 3,
+  "page_size": 2,
+  "steps": [
+    {
+      "operation": "open",
+      "arguments": {
+        "source": "catalog-demo"
+      },
+      "response": {
+        "pit_id": "p0",
+        "source_signature": "catalog-v1",
+        "global_total": 3
+      }
+    },
+    {
+      "operation": "search",
+      "arguments": {
+        "pit": "p0",
+        "slice": {
+          "id": 0,
+          "max": 2
+        },
+        "query": {
+          "term": {
+            "status": "sale"
+          }
+        },
+        "sort": [
+          "updated",
+          "tie_breaker"
+        ],
+        "search_after": null,
+        "track_total_hits": true
+      },
+      "response": {
+        "pit_id": "p1",
+        "hits": [
+          {
+            "id": "a",
+            "sort": [
+              100,
+              1
+            ],
+            "source": {
+              "status": "sale",
+              "service": "clean"
+            }
+          }
+        ],
+        "total": {
+          "value": 2,
+          "relation": "eq"
+        },
+        "timed_out": false,
+        "terminated_early": false,
+        "shards": {
+          "total": 2,
+          "successful": 1,
+          "failed": 1
+        }
+      }
+    },
+    {
+      "operation": "search",
+      "arguments": {
+        "pit": "p1",
+        "slice": {
+          "id": 1,
+          "max": 2
+        },
+        "query": {
+          "term": {
+            "status": "sale"
+          }
+        },
+        "sort": [
+          "updated",
+          "tie_breaker"
+        ],
+        "search_after": null,
+        "track_total_hits": true
+      },
+      "response": {
+        "pit_id": "p2",
+        "hits": [
+          {
+            "id": "b",
+            "sort": [
+              100,
+              2
+            ],
+            "source": {
+              "status": "sale",
+              "service": "clean"
+            }
+          }
+        ],
+        "total": {
+          "value": 1,
+          "relation": "eq"
+        },
+        "timed_out": false,
+        "terminated_early": false,
+        "shards": {
+          "total": 2,
+          "successful": 2,
+          "failed": 0
+        }
+      }
+    },
+    {
+      "operation": "search",
+      "arguments": {
+        "pit": "p2",
+        "slice": {
+          "id": 0,
+          "max": 2
+        },
+        "query": {
+          "term": {
+            "status": "sale"
+          }
+        },
+        "sort": [
+          "updated",
+          "tie_breaker"
+        ],
+        "search_after": [
+          100,
+          1
+        ],
+        "track_total_hits": true
+      },
+      "response": {
+        "pit_id": "p3",
+        "hits": [
+          {
+            "id": "c",
+            "sort": [
+              100,
+              3
+            ],
+            "source": {
+              "status": "sale",
+              "service": "clean"
+            }
+          }
+        ],
+        "total": {
+          "value": 2,
+          "relation": "eq"
+        },
+        "timed_out": false,
+        "terminated_early": false,
+        "shards": {
+          "total": 2,
+          "successful": 2,
+          "failed": 0
+        }
+      }
+    },
+    {
+      "operation": "search",
+      "arguments": {
+        "pit": "p3",
+        "slice": {
+          "id": 1,
+          "max": 2
+        },
+        "query": {
+          "term": {
+            "status": "sale"
+          }
+        },
+        "sort": [
+          "updated",
+          "tie_breaker"
+        ],
+        "search_after": [
+          100,
+          2
+        ],
+        "track_total_hits": true
+      },
+      "response": {
+        "pit_id": "p4",
+        "hits": [],
+        "total": {
+          "value": 1,
+          "relation": "eq"
+        },
+        "timed_out": false,
+        "terminated_early": false,
+        "shards": {
+          "total": 2,
+          "successful": 2,
+          "failed": 0
+        }
+      }
+    },
+    {
+      "operation": "search",
+      "arguments": {
+        "pit": "p4",
+        "slice": {
+          "id": 0,
+          "max": 2
+        },
+        "query": {
+          "term": {
+            "status": "sale"
+          }
+        },
+        "sort": [
+          "updated",
+          "tie_breaker"
+        ],
+        "search_after": [
+          100,
+          3
+        ],
+        "track_total_hits": true
+      },
+      "response": {
+        "pit_id": "p5",
+        "hits": [],
+        "total": {
+          "value": 2,
+          "relation": "eq"
+        },
+        "timed_out": false,
+        "terminated_early": false,
+        "shards": {
+          "total": 2,
+          "successful": 2,
+          "failed": 0
+        }
+      }
+    },
+    {
+      "operation": "close",
+      "arguments": {
+        "pit": "p5"
+      },
+      "response": {
+        "closed": true
+      }
+    }
+  ],
+  "max_page_bytes": 1048576
+}

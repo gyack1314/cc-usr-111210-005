@@ -1,0 +1,7 @@
+# PIT适配器约定
+
+Replay.call接收operation与arguments，逐次核对请求，open/search/close的清单记录真实形状。search请求必须显式search_after，首请求为null；sort为JSON标量数组，序由适配器固定：null小于非null，同列其余值类型一致，数值按数值、字符串按Unicode比较。tie_breaker末列在同PIT内全局唯一。source.id代表文档身份，source业务值原样保存。每slice的total是该切片精确命中数，全局total由open冻结，两者需相加一致。
+
+每次响应最新pit_id会使之前所有ID失效，keepalive已由适配器处理；调用时序固定为轮询未完成slice的ID升序，每轮至多每片一页。预算取消用当前pit_id关闭。已知ID在正常或可捕获异常时关闭，响应后崩溃遗失的未知ID只记录未关闭及服务端租约超时回收，不能凭空构造ID。任一协议错误本轮失败；网络错误仅在旧ID仍有效时可重发原请求；成功响应后ID轮换而本地未提交会造成不可恢复的租约缺口，过期错误pit_expired只可新代重开。局部页事务必须同时保存输出、所有slice状态和唯一最新ID。
+
+短非空页继续，只有成功空页结束；返回相同文档两次或非前进sort不合法。公开清单记录请求和响应，不包含PIT采集实现。
